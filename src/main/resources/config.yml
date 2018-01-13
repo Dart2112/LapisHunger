@@ -1,7 +1,22 @@
-#How much food should you loose for each hunger tick while these conditions are  true
+#How often in ticks should we run the hunger calculations, you might want to slow this down for larger amounts of players
+#the bigger this number the less hunger players will lose as we will calculate and subtract it less often
+#keep this in mind when setting other values
+FoodTickTime: 20
+#How much health should a player loose when they are starving, this is per hunger tick
+StarvingHealth: 0.25
+#How much food must a player have to regen
+RegenFoodRequirement: 18
+#How much health should the player regen each tick while they have the required food
+RegenAmount: 2
+#How much food does it cost each time the player regenerates health
+RegenCost: 1.5
+#How much food should you loose for each hunger tick while these conditions are true
 FoodCosts:
   Sprinting: 0.1
-
+  Jumping: 0.05
+  Swimming: 0.01
+  AttackEntity: 0.1
+  BreakBlock: 0.005
 #Add what ever food you want here, the format is CamelCase eg, CookedChicken or RawMutton
 #Any food without a value will default to the minecraft default value
 FoodValues:
