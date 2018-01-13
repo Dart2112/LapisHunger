@@ -1,0 +1,8 @@
+#How much food should you loose for each hunger tick while these conditions are  true
+FoodCosts:
+  Sprinting: 0.1
+
+#Add what ever food you want here, the format is CamelCase eg, CookedChicken or RawMutton
+#Any food without a value will default to the minecraft default value
+FoodValues:
+  Apple: 4
