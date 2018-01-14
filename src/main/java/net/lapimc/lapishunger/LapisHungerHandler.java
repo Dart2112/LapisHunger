@@ -66,17 +66,23 @@ public class LapisHungerHandler implements Listener {
 
     @EventHandler
     public void onItemConsumeEvent(PlayerItemConsumeEvent e) {
-        foodItem itemEaten = foodItem.Beetroot;
+        foodItem itemEaten = foodItem.NULL;
         for (foodItem item : foodItem.values()) {
             if (e.getItem().getType().toString().equalsIgnoreCase(item.getName())) {
                 itemEaten = item;
                 break;
             }
         }
+        if (itemEaten == foodItem.NULL) {
+            plugin.getLogger().info("Player " + e.getPlayer() + " Consumed an item that isn't detected by this plugin: "
+                    + e.getItem().getType().name());
+            return;
+        }
         Player p = e.getPlayer();
         HungerPlayer hunger = plugin.getPlayer(p.getUniqueId());
-        int toAdd = plugin.getConfig().getInt("FoodValues." + itemEaten.getName(), itemEaten.getValue());
-        hunger.addFood((double) toAdd);
+        Double toAdd = plugin.getConfig().getDouble("FoodValues." + itemEaten.getName(), itemEaten.getValue());
+        Double difference = toAdd - itemEaten.getValue();
+        hunger.addFood(difference);
     }
 
     @EventHandler
@@ -134,8 +140,8 @@ public class LapisHungerHandler implements Listener {
     }
 
     private enum foodItem {
-        Apple(4, "APPLE"), BakedPotato(5, "BAKED_POTATO"), Beetroot(1, "BEETROOT"), BeetrootSoup(6, "BEETROOT_SOUP"),
-        Bread(5, "BREAD"), CakeSlice(2, "CAKE_SLICE"), CakeWhole(14, "CAKE"), Carrot(3, "CARROT"),
+        NULL(0, "NULL"), Apple(4, "APPLE"), BakedPotato(5, "BAKED_POTATO"), Beetroot(1, "BEETROOT"), BeetrootSoup(6, "BEETROOT_SOUP"),
+        Bread(5, "BREAD"), CakeSlice(2, "CAKE"), CakeWhole(14, "CAKE_BLOCK"), Carrot(3, "CARROT"),
         ChorusFruit(4, "CHORUS_FRUIT"), Clownfish(1, "CLOWNFISH"), CookedChicken(6, "COOKED_CHICKEN"),
         CookedFish(5, "COOKED_FISH"), CookedMutton(6, "COOKED_MUTTON"), CookedPorkchop(8, "COOKED_PORKCHOP"),
         CookedRabbit(5, "COOKED_RABBIT"), CookedSalmon(6, "COOKED_SALMON"), Cookie(2, "COOKIE"),

@@ -21,3 +21,5 @@ FoodCosts:
 #Any food without a value will default to the minecraft default value
 FoodValues:
   Apple: 4
+  CakeSlice: 2
+  CakeWhole: 14
