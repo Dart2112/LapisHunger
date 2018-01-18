@@ -92,6 +92,10 @@ public class HungerPlayer {
         return food;
     }
 
+    public void setFood(Double amount) {
+        food = amount;
+    }
+
     public void addFood(Double amount) {
         food = Math.min(20.0, food + amount);
     }

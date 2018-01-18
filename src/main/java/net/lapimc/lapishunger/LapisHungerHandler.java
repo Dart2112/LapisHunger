@@ -56,11 +56,7 @@ public class LapisHungerHandler implements Listener {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             HungerPlayer hunger = plugin.getPlayer(p.getUniqueId());
-            boolean isCorrectHunger = e.getFoodLevel() == hunger.getFood();
-            if (!isCorrectHunger) {
-                e.setCancelled(true);
-                hunger.update();
-            }
+            hunger.setFood((double) e.getFoodLevel());
         }
     }
 
@@ -139,6 +135,7 @@ public class LapisHungerHandler implements Listener {
         hunger.update();
     }
 
+    @SuppressWarnings("unused")
     private enum foodItem {
         NULL(0, "NULL"), Apple(4, "APPLE"), BakedPotato(5, "BAKED_POTATO"), Beetroot(1, "BEETROOT"), BeetrootSoup(6, "BEETROOT_SOUP"),
         Bread(5, "BREAD"), CakeSlice(2, "CAKE"), CakeWhole(14, "CAKE_BLOCK"), Carrot(3, "CARROT"),
