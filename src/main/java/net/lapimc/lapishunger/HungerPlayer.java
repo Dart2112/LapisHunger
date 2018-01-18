@@ -17,18 +17,19 @@
 package net.lapimc.lapishunger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
 public class HungerPlayer {
 
-    private Double health = 20.0;
-    private Double food = 20.0;
-    private Player p;
     public boolean sprinting = false;
     public boolean jumping = false;
     public boolean swimming = false;
+    private Double health = 20.0;
+    private Double food = 20.0;
+    private Player p;
 
     HungerPlayer(LapisHunger plugin, UUID uuid) {
         p = Bukkit.getPlayer(uuid);
@@ -55,7 +56,16 @@ public class HungerPlayer {
                 swimming = false;
                 hungerToRemove += plugin.getConfig().getDouble("FoodCosts.Swimming", 0.01);
             }
-            //TODO: Check if the player is exposed to biome/weather conditions
+            Biome biome = p.getWorld().getBiome(p.getLocation().getBlockX(), p.getLocation().getBlockY());
+            if (biome == Biome.DESERT) {
+                hungerToRemove += plugin.getConfig().getDouble("FoodCosts.BiomeDesert");
+            } else {
+                if (p.getWorld().hasStorm()) {
+                    if (p.getWorld().getHighestBlockAt(p.getLocation()).getY() < p.getLocation().getY()) {
+                        hungerToRemove += plugin.getConfig().getDouble("FoodCosts.WeatherExposure");
+                    }
+                }
+            }
             subtractFood(hungerToRemove);
             update();
         };
